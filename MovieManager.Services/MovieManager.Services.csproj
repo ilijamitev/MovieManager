@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="MovieService\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MovieManager.DataAccess\MovieManager.DataAccess.csproj" />
+    <ProjectReference Include="..\MovieManager.Domain\MovieManager.Domain.csproj" />
+    <ProjectReference Include="..\MovieManager.Helpers\MovieManager.Helpers.csproj" />
+    <ProjectReference Include="..\MovieManager.ServiceModels\MovieManager.ServiceModels.csproj" />
+  </ItemGroup>
+
+</Project>
