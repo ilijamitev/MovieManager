@@ -27,7 +27,7 @@ public class MoviesRepository : IRepository<Movie>
         return _context.Movies.Where(filter);
     }
 
-    public void Create(Movie entity)
+    public void Insert(Movie entity)
     {
         _context.Movies.Add(entity);
         _context.SaveChanges();

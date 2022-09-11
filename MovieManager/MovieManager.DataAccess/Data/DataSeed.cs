@@ -14,6 +14,7 @@ internal static class DataSeed
                 LastName = "Mitev",
                 Username = "ile123",
                 Password = "ile123",
+                Role = Domain.Enums.Role.Client
             }
         );
 

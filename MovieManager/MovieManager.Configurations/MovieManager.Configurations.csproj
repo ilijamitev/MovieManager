@@ -8,12 +8,14 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.2.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\MovieManager.DataAccess\MovieManager.DataAccess.csproj" />
     <ProjectReference Include="..\MovieManager.Helpers\MovieManager.Helpers.csproj" />
     <ProjectReference Include="..\MovieManager.Mappers\MovieManager.Mappers.csproj" />
+    <ProjectReference Include="..\MovieManager.Services\MovieManager.Services.csproj" />
   </ItemGroup>
 
 </Project>

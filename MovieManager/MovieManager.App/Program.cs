@@ -1,5 +1,8 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using MovieManager.Configurations.DependencyInjection;
 using MovieManager.Helpers.SettingsModels;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,15 +13,36 @@ builder.Services.AddEndpointsApiExplorer().AddSwaggerGen();
 var appConfiq = builder.Configuration.GetSection("MovieManagerSettings");
 var movieManagerSetting = appConfiq.Get<MovieManagerSettings>();
 builder.Services.AddOptions<MovieManagerSettings>().Bind(appConfiq);
+var secret = Encoding.ASCII.GetBytes(movieManagerSetting.MovieManagerSecret);
 
-// Injecting Dependencies
+// Configuring Authentication
+builder.Services.AddAuthentication(x =>
+{
+    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}
+).AddJwtBearer(x =>
+{
+    x.RequireHttpsMetadata = false;
+    x.SaveToken = true;
+    x.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(secret),
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ValidateLifetime = false,
+        //RoleClaimType = "Admin",
+    };
+});
+
+// Injecting Dependencies and Configurations
 builder.Services.InjectDbContext(movieManagerSetting.MovieManagerDbConnection)
-                .InjectAutoMapper();
-
-
-
-
-
+                .InjectRepositories()
+                .InjectServices()
+                .AddSwaggerConfiq()
+                .InjectAutoMapper()
+                .InjectFluentValidator();
 
 
 
@@ -36,6 +60,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();    // Use Authentication as well
 app.UseAuthorization();
 
 app.MapControllers();

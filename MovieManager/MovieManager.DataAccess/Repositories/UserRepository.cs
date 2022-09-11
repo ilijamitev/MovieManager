@@ -28,7 +28,7 @@ public class UserRepository : IRepository<User>
         return _context.Users.Where(filter);
     }
 
-    public void Create(User entity)
+    public void Insert(User entity)
     {
         _context.Users.Add(entity);
         _context.SaveChanges();
