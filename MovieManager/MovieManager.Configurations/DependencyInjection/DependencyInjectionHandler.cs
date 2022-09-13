@@ -9,6 +9,7 @@ using MovieManager.Domain.Models;
 using MovieManager.Helpers.Validations;
 using MovieManager.Mappers.MovieMapper;
 using MovieManager.Mappers.UserMapper;
+using MovieManager.ServiceModels.MovieServiceModels;
 using MovieManager.ServiceModels.UserServiceModels;
 using MovieManager.Services.Interfaces;
 using MovieManager.Services.MovieService;
@@ -34,6 +35,7 @@ public static class DependencyInjectionHandler
     public static IServiceCollection InjectFluentValidator(this IServiceCollection services)
     {
         services.AddScoped<IValidator<RegisterUserDto>, RegisterUserValidator>();
+        services.AddScoped<IValidator<CreateMovieDto>, CreateMovieValidator>();
         return services;
     }
 

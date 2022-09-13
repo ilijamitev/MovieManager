@@ -49,7 +49,10 @@ public class LoginRegisterService : ILoginRegisterService
     public UserLoginDto Login(LoginModel user)
     {
         var userFromDb = _userRepository.Filter(x => x.Username.Equals(user.Username, StringComparison.InvariantCultureIgnoreCase)).SingleOrDefault();
-        ArgumentNullException.ThrowIfNull(userFromDb, "Invalid username!");
+        if (userFromDb == null)
+        {
+            throw new Exception("Invalid username!");
+        }
         var hashedPassword = HashPassword(user.Password);
         if (userFromDb.Password != hashedPassword)
         {

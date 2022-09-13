@@ -1,7 +1,6 @@
-﻿namespace MovieManager.Services.Interfaces
-{
-    public interface IUserService
-    {
+﻿namespace MovieManager.Services.Interfaces;
 
-    }
+public interface IUserService
+{
+
 }

@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="11.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\MovieManager.DataAccess\MovieManager.DataAccess.csproj" />
     <ProjectReference Include="..\MovieManager.Domain\MovieManager.Domain.csproj" />
     <ProjectReference Include="..\MovieManager.Helpers\MovieManager.Helpers.csproj" />

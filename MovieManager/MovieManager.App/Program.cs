@@ -2,12 +2,20 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using MovieManager.Configurations.DependencyInjection;
 using MovieManager.Helpers.SettingsModels;
+using Serilog;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer().AddSwaggerGen();
+
+// Configurating Serilog 
+var loggerConfiq = builder.Configuration.GetSection("Serilog");
+builder.Host.UseSerilog((context, confiq) =>
+{
+    confiq.ReadFrom.ConfigurationSection(loggerConfiq);
+});
 
 // Configuring MovieManagerSettings section from appsettings.json
 var appConfiq = builder.Configuration.GetSection("MovieManagerSettings");
@@ -36,6 +44,7 @@ builder.Services.AddAuthentication(x =>
     };
 });
 
+
 // Injecting Dependencies and Configurations
 builder.Services.InjectDbContext(movieManagerSetting.MovieManagerDbConnection)
                 .InjectRepositories()
@@ -43,9 +52,6 @@ builder.Services.InjectDbContext(movieManagerSetting.MovieManagerDbConnection)
                 .AddSwaggerConfiq()
                 .InjectAutoMapper()
                 .InjectFluentValidator();
-
-
-
 
 
 
@@ -59,6 +65,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseSerilogRequestLogging();  // Logs every request
 
 app.UseAuthentication();    // Use Authentication as well
 app.UseAuthorization();
