@@ -23,6 +23,7 @@ var movieManagerSetting = appConfiq.Get<MovieManagerSettings>();
 builder.Services.AddOptions<MovieManagerSettings>().Bind(appConfiq);
 var secret = Encoding.ASCII.GetBytes(movieManagerSetting.MovieManagerSecret);
 
+
 // Configuring Authentication
 builder.Services.AddAuthentication(x =>
 {
@@ -54,9 +55,10 @@ builder.Services.InjectDbContext(movieManagerSetting.MovieManagerDbConnection)
                 .InjectFluentValidator();
 
 
-
+builder.Services.AddCors(options => options.AddPolicy("myPolicy", policy => policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
 
 var app = builder.Build();
+app.UseCors("myPolicy");
 
 if (app.Environment.IsDevelopment())
 {
